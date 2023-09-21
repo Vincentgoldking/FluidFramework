@@ -19,6 +19,9 @@ data:
             "timestamp": false,
             "label": "winston"
         },
+        "config": {
+            "dumpConfig": true
+        },
         "lumberjack": {
             "options": {
                 "enableGlobalTelemetryContext": {{ .Values.lumberjack.options.enableGlobalTelemetryContext }}

@@ -7,6 +7,9 @@
 		"timestamp": true,
 		"label": "winston"
 	},
+	"config": {
+		"dumpConfig": true
+  },
 	"lumberjack": {
 		"options": {
 			"enableGlobalTelemetryContext": true
