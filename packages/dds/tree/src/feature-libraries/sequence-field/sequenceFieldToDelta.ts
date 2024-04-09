@@ -3,36 +3,36 @@
  * Licensed under the MIT License.
  */
 
-import { assert, unreachableCase } from "@fluidframework/core-utils";
-import { Mutable } from "../../util/index.js";
+import { assert, unreachableCase } from "@fluidframework/core-utils/internal";
+
 import {
 	DeltaDetachedNodeChanges,
 	DeltaDetachedNodeRename,
 	DeltaFieldChanges,
-	DeltaFieldMap,
 	DeltaMark,
 	TaggedChange,
 	areEqualChangeAtomIds,
 	makeDetachedNodeId,
 } from "../../core/index.js";
+import { Mutable } from "../../util/index.js";
 import { nodeIdFromChangeAtom } from "../deltaUtils.js";
+
+import { isMoveIn, isMoveOut } from "./moveEffectTable.js";
 import { MarkList, NoopMarkType } from "./types.js";
 import {
 	areInputCellsEmpty,
 	areOutputCellsEmpty,
+	getDetachOutputId,
 	getEndpoint,
 	getInputCellId,
 	getOutputCellId,
 	isAttachAndDetachEffect,
-	getDetachOutputId,
 } from "./utils.js";
-import { isMoveIn, isMoveOut } from "./moveEffectTable.js";
+import { ToDelta } from "../modular-schema/index.js";
 
-export type ToDelta<TNodeChange> = (child: TNodeChange) => DeltaFieldMap;
-
-export function sequenceFieldToDelta<TNodeChange>(
-	{ change, revision }: TaggedChange<MarkList<TNodeChange>>,
-	deltaFromChild: ToDelta<TNodeChange>,
+export function sequenceFieldToDelta(
+	{ change, revision }: TaggedChange<MarkList>,
+	deltaFromChild: ToDelta,
 ): DeltaFieldChanges {
 	const local: DeltaMark[] = [];
 	const global: DeltaDetachedNodeChanges[] = [];
